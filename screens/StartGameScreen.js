@@ -32,6 +32,14 @@ const style = StyleSheet.create({
     marginVertical: 10
   },
   inputContainer: {
+      padding:20,
+      borderRadius:5,
+      elevation:6,
+      backgroundColor:'white',
+      shadowColor:'black',
+      shadowOffset:{width:0,height:2},
+      shadowOpacity:0.32,
+      shadowRadius:5,
       width:300,
       maxWidth:'80%',
       alignItems:'center'
