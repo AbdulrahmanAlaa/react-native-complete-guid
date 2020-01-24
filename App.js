@@ -5,7 +5,12 @@ import GoalInput from './components/GoalInput';
 
 export default function App() {
   const [listGoals, setListGoals] = useState([]);
-  const addGoalHandler = (goalTitle) => {
+  const deleteGoalHandler = key => {
+    setListGoals(list => {
+      return [...list.filter(item => item.key !== key)];
+    });
+  };
+  const addGoalHandler = goalTitle => {
     setListGoals(listGoals => [
       ...listGoals,
       { key: Math.random().toString(), value: goalTitle }
@@ -13,10 +18,15 @@ export default function App() {
   };
   return (
     <View style={style.screen}>
-      <GoalInput onAddInput={addGoalHandler}/>
+      <GoalInput onAddInput={addGoalHandler} />
       <FlatList
         data={listGoals}
-        renderItem={itemDate => <GoalItem title={itemDate.item.value} />}
+        renderItem={itemDate => (
+          <GoalItem
+            onDelete={()=>deleteGoalHandler(itemDate.item.key)}
+            title={itemDate.item.value}
+          />
+        )}
       />
     </View>
   );
