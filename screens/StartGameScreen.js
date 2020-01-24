@@ -1,28 +1,44 @@
-import React from 'react';
-import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  TouchableWithoutFeedback,
+  Keyboard
+} from 'react-native';
 import Card from '../components/Card';
 import Colors from '../constants/color';
 import { Input } from '../components/Input';
 const StartGameScreen = props => {
+  const [enteredNumber, setEnteredNumber] = useState('');
+  const onChangeTextHandler = (text) => {
+    setEnteredNumber(text.replace(/[^0-9]/g, ''));
+  };
   return (
-    <View style={style.screen}>
-      <Text style={style.title}>Start a New Game</Text>
-      <View>
-        <Card style={style.inputContainer}>
-          <Text> select a number </Text>
-
-          <Input style={style.input}/>
-          <View style={style.buttonContainer}>
-            <View style={style.button}>
-              <Button color={Colors.accent} title='RESET' />
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+      }}
+    >
+      <View style={style.screen}>
+        <Text style={style.title}>Start a New Game</Text>
+        <View>
+          <Card style={style.inputContainer}>
+            <Text> select a number </Text>
+            <Input value={enteredNumber} onChangeText={onChangeTextHandler} style={style.input} />
+            <View style={style.buttonContainer}>
+              <View style={style.button}>
+                <Button color={Colors.accent} title='RESET' />
+              </View>
+              <View style={style.button}>
+                <Button color={Colors.primary} title='CONFIRM' />
+              </View>
             </View>
-            <View style={style.button}>
-              <Button color={Colors.primary} title='CONFIRM' />
-            </View>
-          </View>
-        </Card>
+          </Card>
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 export default StartGameScreen;
@@ -51,10 +67,10 @@ const style = StyleSheet.create({
   },
   button: {
     flex: 1,
-    marginHorizontal:5,
+    marginHorizontal: 5
   },
-  input:{
-      width:50,
-      textAlign:'center'
+  input: {
+    width: 50,
+    textAlign: 'center'
   }
 });
