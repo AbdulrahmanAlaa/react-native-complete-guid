@@ -18,10 +18,17 @@ export default function App() {
     ]);
     setIsAddModel(false);
   };
+  const addAddingGoal = goalTitle => {
+    setIsAddModel(false);
+  };
   return (
     <View style={style.screen}>
       <Button title='Add New Goal' onPress={() => setIsAddModel(true)} />
-      <GoalInput visible={isAddModel} onAddInput={addGoalHandler} />
+      <GoalInput
+        onCancel={addAddingGoal}
+        visible={isAddModel}
+        onAddInput={addGoalHandler}
+      />
       <FlatList
         data={listGoals}
         renderItem={itemDate => (
