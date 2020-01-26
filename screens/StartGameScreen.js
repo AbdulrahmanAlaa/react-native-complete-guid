@@ -5,16 +5,42 @@ import {
   StyleSheet,
   Button,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  Alert
 } from 'react-native';
 import Card from '../components/Card';
 import Colors from '../constants/color';
 import { Input } from '../components/Input';
 const StartGameScreen = props => {
   const [enteredNumber, setEnteredNumber] = useState('');
-  const onChangeTextHandler = (text) => {
+  const [confirmed, setConfirmed] = useState(false);
+  const [confirmedNumber, setConfirmedNumber] = useState();
+  const onChangeTextHandler = text => {
     setEnteredNumber(text.replace(/[^0-9]/g, ''));
   };
+  const resetInputHandler = () => {
+    setEnteredNumber('');
+    setConfirmed(false);
+  };
+  const confirmInputHandler = () => {
+    const selectedNumber = parseInt(enteredNumber);
+    if (isNaN(selectedNumber) || selectedNumber <= 0 || selectedNumber > 99) {
+      Alert.alert(
+        'Invalid number!',
+        'Number has to be a number between 1 and 99',
+        [{ text: 'Okay', style: 'destructive', onPress: resetInputHandler }]
+      );
+      return;
+    }
+    setEnteredNumber('');
+    setConfirmed(true);
+    setConfirmedNumber(selectedNumber);
+  };
+
+  let confirmedSettings;
+  if (confirmed) {
+    confirmedSettings = <Text>Choosen Number {confirmedNumber}</Text>;
+  }
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -26,17 +52,30 @@ const StartGameScreen = props => {
         <View>
           <Card style={style.inputContainer}>
             <Text> select a number </Text>
-            <Input value={enteredNumber} onChangeText={onChangeTextHandler} style={style.input} />
+            <Input
+              value={enteredNumber}
+              onChangeText={onChangeTextHandler}
+              style={style.input}
+            />
             <View style={style.buttonContainer}>
               <View style={style.button}>
-                <Button color={Colors.accent} title='RESET' />
+                <Button
+                  onPress={resetInputHandler}
+                  color={Colors.accent}
+                  title='RESET'
+                />
               </View>
               <View style={style.button}>
-                <Button color={Colors.primary} title='CONFIRM' />
+                <Button
+                  onPress={confirmInputHandler}
+                  color={Colors.primary}
+                  title='CONFIRM'
+                />
               </View>
             </View>
           </Card>
         </View>
+        {confirmedSettings}
       </View>
     </TouchableWithoutFeedback>
   );
