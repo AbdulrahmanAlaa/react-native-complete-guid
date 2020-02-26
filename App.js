@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import Header from './components/Header';
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
@@ -8,6 +8,12 @@ import GameOver from './screens/GameOverScreen';
 export default function App() {
   const [numberOfRounds, setNumberOfRounds] = useState(0);
   const [userNumber, setUserNumber] = useState();
+
+  const startNewGameHandler = () => {
+    setNumberOfRounds(0);
+    setUserNumber(null);
+  };
+
   const onstartGameHandler = userSelectedNumber => {
     setUserNumber(userSelectedNumber);
   };
@@ -21,7 +27,9 @@ export default function App() {
       <GameScreen userChoice={userNumber} onGameOver={gameOverHandler} />
     );
   } else if (numberOfRounds > 0) {
-    content = <GameOver />;
+    content = (
+      <GameOver numberOfRounds={numberOfRounds} userNumber={userNumber} onRestart={startNewGameHandler} />
+    );
   }
   return (
     <View style={style.screen}>
