@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import Colors from '../constants/color';
+import BoldText from './BoldText';
 
 const Header = ({ title }) => (
   <View style={style.header}>
-    <Text style={style.title}>{title}</Text>
+    <BoldText style={style.title}>{title}</BoldText>
   </View>
 );
 export default Header;
@@ -18,7 +19,6 @@ const style = StyleSheet.create({
     alignItems: 'center'
   },
   title: {
-    color: 'black',
-    fontSize: 18
+    color: 'black'
   }
 });

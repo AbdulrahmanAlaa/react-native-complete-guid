@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, Button, Alert } from 'react-native';
+import { View, StyleSheet, Button, Alert } from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
-
+import LightText from '../components/LightText';
 const generateRamdomBetween = (min, max, exclude) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -27,7 +27,7 @@ const GameScreen = ({ userChoice, onGameOver }) => {
     if (currentGuess === userChoice) {
       onGameOver(numberRoundes);
     }
-  }, [userChoice,currentGuess, onGameOver]);
+  }, [userChoice, currentGuess, onGameOver]);
   const guessHandler = guess => {
     if (
       (guess === 'lower' && currentGuess < userChoice) ||
@@ -55,7 +55,7 @@ const GameScreen = ({ userChoice, onGameOver }) => {
   };
   return (
     <View style={styles.screen}>
-      <Text>Opponent's Guess</Text>
+      <LightText>Opponent's Guess</LightText>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card style={styles.buttonContainer}>
         <Button title='LOWER' onPress={guessHandler.bind(this, 'lower')} />

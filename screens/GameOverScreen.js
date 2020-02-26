@@ -1,12 +1,12 @@
 import React from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
-
+import {  View, StyleSheet, Button } from 'react-native';
+import LightText from '../components/LightText';
 const GameOverScreen = ({ numberOfRounds, userNumber, onRestart }) => {
   return (
     <View style={style.screen}>
-      <Text>Game Over !</Text>
-      <Text>Number Of Roundes: {numberOfRounds}</Text>
-      <Text>Number Was: {userNumber}</Text>
+      <LightText>Game Over !</LightText>
+      <LightText>Number Of Roundes: {numberOfRounds}</LightText>
+      <LightText>Number Was: {userNumber}</LightText>
       <Button title='NEW GAME' onPress={onRestart} />
     </View>
   );
