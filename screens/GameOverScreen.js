@@ -1,15 +1,22 @@
 import React from 'react';
 import { View, StyleSheet, Button, Image } from 'react-native';
 import LightText from '../components/LightText';
+import BoldText from '../components/BoldText';
+
 const GameOverScreen = ({ numberOfRounds, userNumber, onRestart }) => {
   return (
     <View style={style.screen}>
-      <LightText>Game Over !</LightText>
+      <BoldText>Game Over !</BoldText>
       <View style={style.imageContainer}>
         <Image
-          resizeMode="cover"
+          fadeDuration={1000}
+          resizeMode='cover'
           style={style.image}
-          source={require('../assets/images/success.png')}
+          // source={require('../assets/images/success.png')}
+          source={{
+            uri:
+              'https://www.telegraph.co.uk/content/dam/Travel/ski/K2-mountain-Andrzej-Bargiel-first-ski-descent-by-Piotr-Pawlus-Red-Bull-Content-Pool.jpg?imwidth=450'
+          }}
         />
       </View>
       <LightText>Number Of Roundes: {numberOfRounds}</LightText>
@@ -27,8 +34,8 @@ const style = StyleSheet.create({
     borderRadius: 150,
     borderColor: 'black',
     marginVertical: 30,
-    overflow:'hidden',
-    borderWidth:3
+    overflow: 'hidden',
+    borderWidth: 3
   },
   image: {
     width: '100%',
