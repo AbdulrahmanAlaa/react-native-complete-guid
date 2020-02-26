@@ -102,6 +102,7 @@ const style = StyleSheet.create({
     padding: 10
   },
   title: {
+    fontFamily:'open-sans-bold',
     fontSize: 20,
     marginVertical: 10
   },
