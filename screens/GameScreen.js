@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, Button, Alert } from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
@@ -14,17 +14,21 @@ const generateRamdomBetween = (min, max, exclude) => {
   }
 };
 
-const GameScreen = ({ userChoice }) => {
+const GameScreen = ({ userChoice, onGameOver }) => {
+  const [numberRoundes, setNumberRoundes] = useState(0);
   const [currentGuess, setCurrentGuess] = useState(
     generateRamdomBetween(1, 100, userChoice)
   );
   const currentLow = useRef(1);
   const currentHigh = useRef(100);
-  const guessHandler = guess => {
+
+  useEffect(() => {
+    setNumberRoundes(_numberRoundes => _numberRoundes + 1);
     if (currentGuess === userChoice) {
-      console.log('winner');
-      return;
+      onGameOver(numberRoundes);
     }
+  }, [userChoice,currentGuess, onGameOver]);
+  const guessHandler = guess => {
     if (
       (guess === 'lower' && currentGuess < userChoice) ||
       (guess === 'high' && currentGuess > userChoice)
@@ -40,14 +44,13 @@ const GameScreen = ({ userChoice }) => {
     } else {
       currentLow.current = currentGuess;
     }
-    console.log(
-      currentLow.current,
-      currentHigh.current,
-      userChoice,
-      currentGuess
-    );
+
     setCurrentGuess(
-      generateRamdomBetween(currentLow.current, currentHigh.current,currentGuess)
+      generateRamdomBetween(
+        currentLow.current,
+        currentHigh.current,
+        currentGuess
+      )
     );
   };
   return (
