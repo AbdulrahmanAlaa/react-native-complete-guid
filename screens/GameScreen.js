@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, StyleSheet, Button, Alert } from 'react-native';
+import { View, StyleSheet, Button, Alert, ScrollView } from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import LightText from '../components/LightText';
@@ -17,17 +17,17 @@ const generateRamdomBetween = (min, max, exclude) => {
 };
 
 const GameScreen = ({ userChoice, onGameOver }) => {
-  const [numberRoundes, setNumberRoundes] = useState(0);
   const [currentGuess, setCurrentGuess] = useState(
     generateRamdomBetween(1, 100, userChoice)
   );
+  const [guessNumbers, setGuessNumbers] = useState([]);
   const currentLow = useRef(1);
   const currentHigh = useRef(100);
 
   useEffect(() => {
-    setNumberRoundes(_numberRoundes => _numberRoundes + 1);
+    setGuessNumbers(guessNumbers => [currentGuess, ...guessNumbers]);
     if (currentGuess === userChoice) {
-      onGameOver(numberRoundes);
+      onGameOver(guessNumbers.length);
     }
   }, [userChoice, currentGuess, onGameOver]);
   const guessHandler = guess => {
@@ -44,7 +44,7 @@ const GameScreen = ({ userChoice, onGameOver }) => {
     if (guess === 'lower') {
       currentHigh.current = currentGuess;
     } else {
-      currentLow.current = currentGuess;
+      currentLow.current = currentGuess + 1;
     }
 
     setCurrentGuess(
@@ -67,6 +67,13 @@ const GameScreen = ({ userChoice, onGameOver }) => {
           <Ionicons size={24} color='white' name='md-add' />
         </MainButton>
       </Card>
+      <ScrollView>
+        {guessNumbers.map(guess => (
+          <View key={guess}>
+            <LightText>{guess}</LightText>
+          </View>
+        ))}
+      </ScrollView>
     </View>
   );
 };
