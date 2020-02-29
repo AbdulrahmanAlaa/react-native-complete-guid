@@ -4,6 +4,7 @@ import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import LightText from '../components/LightText';
 import MainButton from '../components/MainButton';
+import { Ionicons } from '@expo/vector-icons';
 const generateRamdomBetween = (min, max, exclude) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -60,10 +61,10 @@ const GameScreen = ({ userChoice, onGameOver }) => {
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card style={styles.buttonContainer}>
         <MainButton onPress={guessHandler.bind(this, 'lower')}>
-          LOWER
+          <Ionicons size={24} color='white' name='md-remove' />
         </MainButton>
         <MainButton onPress={guessHandler.bind(this, 'high')}>
-          GREATER
+          <Ionicons size={24} color='white' name='md-add' />
         </MainButton>
       </Card>
     </View>
