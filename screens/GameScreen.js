@@ -76,8 +76,8 @@ const GameScreen = ({ userChoice, onGameOver }) => {
         </MainButton>
       </Card>
 
-      <View style={styles.list}>
-        <ScrollView>
+      <View style={styles.listContainer}>
+        <ScrollView contentContainerStyle={styles.list}>
           {guessNumbers.map((guess, index) =>
             renderListItem(guess, guessNumbers.length - index)
           )}
@@ -96,7 +96,12 @@ const styles = StyleSheet.create({
     width: 300,
     maxWidth: '80%'
   },
-  list: {
+  list:{
+    // alignItems:'center',
+    flexGrow: 1, //fix andriod scrollview
+    justifyContent:'flex-end',
+  },
+  listContainer: {
     flex: 1, //fix andriod scrollview
     width: '80%'
   },
