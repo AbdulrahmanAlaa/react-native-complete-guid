@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, StyleSheet, Button, Image } from 'react-native';
+import { View, StyleSheet, Button, Image, Text } from 'react-native';
 import LightText from '../components/LightText';
 import BoldText from '../components/BoldText';
-
+import Colors from '../constants/color';
+import MainButton from '../components/MainButton';
 const GameOverScreen = ({ numberOfRounds, userNumber, onRestart }) => {
   return (
     <View style={style.screen}>
@@ -12,16 +13,23 @@ const GameOverScreen = ({ numberOfRounds, userNumber, onRestart }) => {
           fadeDuration={1000}
           resizeMode='cover'
           style={style.image}
-          // source={require('../assets/images/success.png')}
-          source={{
-            uri:
-              'https://www.telegraph.co.uk/content/dam/Travel/ski/K2-mountain-Andrzej-Bargiel-first-ski-descent-by-Piotr-Pawlus-Red-Bull-Content-Pool.jpg?imwidth=450'
-          }}
+          source={require('../assets/images/success.png')}
+          // source={{
+          //   uri:
+          //     'https://www.telegraph.co.uk/content/dam/Travel/ski/K2-mountain-Andrzej-Bargiel-first-ski-descent-by-Piotr-Pawlus-Red-Bull-Content-Pool.jpg?imwidth=450'
+          // }}
         />
       </View>
-      <LightText>Number Of Roundes: {numberOfRounds}</LightText>
-      <LightText>Number Was: {userNumber}</LightText>
-      <Button title='NEW GAME' onPress={onRestart} />
+
+      <View style={style.textContainer}>
+        <LightText style={style.txt}>
+          Your phone needed{' '}
+          <Text style={style.numberText}>{numberOfRounds}</Text> rounds to guess
+          the number <Text style={style.numberText}>{userNumber}</Text>
+        </LightText>
+      </View>
+
+      <MainButton  onPress={onRestart} >NEW GAME</MainButton>
     </View>
   );
 };
@@ -40,5 +48,16 @@ const style = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%'
+  },
+  txt: {
+    textAlign: 'center'
+  },
+  textContainer: {
+    marginHorizontal: 30,
+    marginVertical:10
+  },
+  numberText: {
+    fontFamily: 'open-sans-bold',
+    color: Colors.primary
   }
 });

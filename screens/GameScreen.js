@@ -3,6 +3,7 @@ import { View, StyleSheet, Button, Alert } from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import LightText from '../components/LightText';
+import MainButton from '../components/MainButton';
 const generateRamdomBetween = (min, max, exclude) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -58,8 +59,12 @@ const GameScreen = ({ userChoice, onGameOver }) => {
       <LightText>Opponent's Guess</LightText>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card style={styles.buttonContainer}>
-        <Button title='LOWER' onPress={guessHandler.bind(this, 'lower')} />
-        <Button title='GREATER' onPress={guessHandler.bind(this, 'high')} />
+        <MainButton onPress={guessHandler.bind(this, 'lower')}>
+          LOWER
+        </MainButton>
+        <MainButton onPress={guessHandler.bind(this, 'high')}>
+          GREATER
+        </MainButton>
       </Card>
     </View>
   );
