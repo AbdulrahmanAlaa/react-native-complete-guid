@@ -3,6 +3,7 @@ import { View, StyleSheet, Button, Alert, ScrollView } from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import LightText from '../components/LightText';
+import BoldText from '../components/BoldText';
 import MainButton from '../components/MainButton';
 import { Ionicons } from '@expo/vector-icons';
 const generateRamdomBetween = (min, max, exclude) => {
@@ -55,6 +56,13 @@ const GameScreen = ({ userChoice, onGameOver }) => {
       )
     );
   };
+
+  const renderListItem = (value, index) => (
+    <View key={value} style={styles.listItem}>
+      <BoldText>#{index}</BoldText>
+      <LightText>{value}</LightText>
+    </View>
+  );
   return (
     <View style={styles.screen}>
       <LightText>Opponent's Guess</LightText>
@@ -67,13 +75,14 @@ const GameScreen = ({ userChoice, onGameOver }) => {
           <Ionicons size={24} color='white' name='md-add' />
         </MainButton>
       </Card>
-      <ScrollView>
-        {guessNumbers.map(guess => (
-          <View key={guess}>
-            <LightText>{guess}</LightText>
-          </View>
-        ))}
-      </ScrollView>
+
+      <View style={styles.list}>
+        <ScrollView>
+          {guessNumbers.map((guess, index) =>
+            renderListItem(guess, guessNumbers.length - index)
+          )}
+        </ScrollView>
+      </View>
     </View>
   );
 };
@@ -86,6 +95,19 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: 300,
     maxWidth: '80%'
+  },
+  list: {
+    flex: 1, //fix andriod scrollview
+    width: '80%'
+  },
+  listItem: {
+    borderColor: '#ccc',
+    borderWidth: 1,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+    marginVertical: 10
   }
 });
 
