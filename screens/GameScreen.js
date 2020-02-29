@@ -1,5 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, StyleSheet, Button, Alert, ScrollView } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Alert,
+  ScrollView,
+  FlatList
+} from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import LightText from '../components/LightText';
@@ -26,7 +32,7 @@ const GameScreen = ({ userChoice, onGameOver }) => {
   const currentHigh = useRef(100);
 
   useEffect(() => {
-    setGuessNumbers(guessNumbers => [currentGuess, ...guessNumbers]);
+    setGuessNumbers(guessNumbers => [currentGuess.toString(), ...guessNumbers]);
     if (currentGuess === userChoice) {
       onGameOver(guessNumbers.length);
     }
@@ -57,10 +63,17 @@ const GameScreen = ({ userChoice, onGameOver }) => {
     );
   };
 
-  const renderListItem = (value, index) => (
-    <View key={value} style={styles.listItem}>
-      <BoldText>#{index}</BoldText>
-      <LightText>{value}</LightText>
+  // const renderListItem = (value, index) => (
+  //   <View key={value} style={styles.listItem}>
+  //     <BoldText>#{index}</BoldText>
+  //     <LightText>{value}</LightText>
+  //   </View>
+  // );
+
+  const renderFlatListItem = (listLength, itemData) => (
+    <View style={styles.listItem}>
+      <BoldText>#{listLength - itemData.index}</BoldText>
+      <LightText>{itemData.item}</LightText>
     </View>
   );
   return (
@@ -77,11 +90,16 @@ const GameScreen = ({ userChoice, onGameOver }) => {
       </Card>
 
       <View style={styles.listContainer}>
-        <ScrollView contentContainerStyle={styles.list}>
+        <FlatList
+          data={guessNumbers}
+          keyExtractor={item => item}
+          renderItem={renderFlatListItem.bind(this, guessNumbers.length)}
+        />
+        {/* <ScrollView contentContainerStyle={styles.list}>
           {guessNumbers.map((guess, index) =>
             renderListItem(guess, guessNumbers.length - index)
           )}
-        </ScrollView>
+        </ScrollView> */}
       </View>
     </View>
   );
@@ -96,10 +114,10 @@ const styles = StyleSheet.create({
     width: 300,
     maxWidth: '80%'
   },
-  list:{
+  list: {
     // alignItems:'center',
     flexGrow: 1, //fix andriod scrollview
-    justifyContent:'flex-end',
+    justifyContent: 'flex-end'
   },
   listContainer: {
     flex: 1, //fix andriod scrollview
